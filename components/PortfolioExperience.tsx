@@ -309,6 +309,7 @@ function TiltProject({ project, onOpen }: { project: Project; onOpen: (project: 
             src={thumbnail}
             alt=""
             className="project-video-thumb"
+            style={project.kind === "image" ? { filter: "none", transform: "none", objectFit: "contain", background: "#000" } : undefined}
             loading={project.id === "01" || project.id === "02" ? "eager" : "lazy"}
             draggable={false}
             onError={() => setImageFailed(true)}
