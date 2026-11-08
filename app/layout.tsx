@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import "./artwork-card-fix.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://thrtysix.com"),

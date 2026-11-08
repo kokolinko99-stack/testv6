@@ -1,0 +1,52 @@
+/*
+ * THRTYSIX — Artwork card ratio fix
+ *
+ * These selectors intentionally target the three new cards by their stable
+ * project IDs. This overrides older nth-child-based layout rules in
+ * globals.css, including the mobile 16:10 rule.
+ */
+
+/* Keep the three artwork cards in the same responsive grid, without
+   legacy nth-child rules making the first card span the entire row. */
+.work .project-list .project-layout-row-new > .project-card.project-card-08,
+.work .project-list .project-layout-row-new > .project-card.project-card-09,
+.work .project-list .project-layout-row-new > .project-card.project-card-10 {
+  grid-column: auto !important;
+  width: 100% !important;
+  margin: 0 !important;
+  justify-self: stretch !important;
+  align-self: start !important;
+}
+
+/* Native aspect ratios from the actual artwork files:
+   Piece 009 = 1638 × 2048 (4:5)
+   Piece 007 = 1414 × 1414 (1:1)
+   New character = 1080 × 1080 (1:1)
+*/
+.work .project-list .project-layout-row-new > .project-card.project-card-08 > .project-stage {
+  aspect-ratio: 4 / 5 !important;
+}
+
+.work .project-list .project-layout-row-new > .project-card.project-card-09 > .project-stage,
+.work .project-list .project-layout-row-new > .project-card.project-card-10 > .project-stage {
+  aspect-ratio: 1 / 1 !important;
+}
+
+/* Show the complete artwork instead of cropping it to fill a card. */
+.work .project-list .project-layout-row-new > .project-card.project-card-08 .project-video-thumb,
+.work .project-list .project-layout-row-new > .project-card.project-card-09 .project-video-thumb,
+.work .project-list .project-layout-row-new > .project-card.project-card-10 .project-video-thumb {
+  object-fit: contain !important;
+  object-position: center !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+/* Preserve correct proportions on small screens too. */
+@media (max-width: 900px) {
+  .work .project-list .project-layout-row-new > .project-card.project-card-08,
+  .work .project-list .project-layout-row-new > .project-card.project-card-09,
+  .work .project-list .project-layout-row-new > .project-card.project-card-10 {
+    grid-column: auto !important;
+  }
+}
