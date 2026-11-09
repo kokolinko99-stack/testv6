@@ -1,31 +1,34 @@
 /*
- * THRTYSIX — Selected Work layout repositioning
+ * THRTYSIX — Compact Selected Work layout
  *
- * Replace app/artwork-card-fix.css with this file.
- * The existing app/layout.tsx already imports this stylesheet.
+ * Replace app/artwork-card-fix.css with this stylesheet.
+ * app/layout.tsx already imports it.
  *
- * Desktop / wide tablet composition:
- *   Row 1: PROOF NUTRITION | MICHAEL JORDAN
- *   Row 2: PIECE 009       | THRTYSIX SKILLSET
- *   Row 3: THESINNERS      | LAMBORGHINI
- *   Row 4: PIECE 007       | TRAVIS SCOTT
- *   Row 5: PARALLEL        | UNTITLED CHARACTER ARTWORK
+ * Desktop rows:
+ *  01 Proof Nutrition              | 02 Michael Jordan
+ *  08 Piece 009                    | 03 THRTYSIX Skillset
+ *  04 TheSinners                   | 05 Lamborghini
+ *  09 Piece 007                    | 06 Travis Scott Documentary
+ *  07 Parallel                     | 10 Untitled Character Artwork
  *
- * The original JSX wrappers are flattened with display: contents so every
- * project card can be placed into the editorial grid without changing the
- * project's content, modal behavior, animations, or data.
+ * The grid is deliberately capped and centered so the paired cards do not
+ * stretch across the entire viewport.
  */
 
+/* Compact, centered two-column project grid. */
 .work .project-list {
   display: grid !important;
-  grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+  width: min(100%, 1180px) !important;
+  max-width: 1180px !important;
+  margin-inline: auto !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   grid-auto-rows: auto;
-  column-gap: clamp(18px, 2.8vw, 44px) !important;
-  row-gap: clamp(58px, 7vw, 112px) !important;
+  column-gap: clamp(22px, 3vw, 42px) !important;
+  row-gap: clamp(52px, 6vw, 88px) !important;
   align-items: start !important;
 }
 
-/* Flatten the existing layout wrappers but preserve their children. */
+/* Flatten the original layout wrappers so the cards share one grid. */
 .work .project-list > .project-layout-row-top,
 .work .project-list > .project-layout-feature,
 .work .project-list > .project-layout-row-mixed,
@@ -35,7 +38,7 @@
   display: contents !important;
 }
 
-/* Reset inherited width and placement rules before assigning the new grid. */
+/* Remove legacy width and nth-child placement constraints. */
 .work .project-list .project-card {
   grid-column: auto !important;
   grid-row: auto !important;
@@ -47,73 +50,32 @@
   align-self: start !important;
 }
 
-/* Row 1 — original opening pair. */
-.work .project-card-01 {
-  grid-column: 1 / span 5 !important;
-  grid-row: 1 !important;
-}
+/* Row 1 — opening pair. */
+.work .project-card-01 { grid-column: 1 !important; grid-row: 1 !important; }
+.work .project-card-02 { grid-column: 2 !important; grid-row: 1 !important; }
 
-.work .project-card-02 {
-  grid-column: 6 / span 7 !important;
-  grid-row: 1 !important;
-}
+/* Row 2 — Piece 009 fills the space beside the Skillset card. */
+.work .project-card-08 { grid-column: 1 !important; grid-row: 2 !important; }
+.work .project-card-03 { grid-column: 2 !important; grid-row: 2 !important; }
 
-/* Row 2 — Piece 009 left of the Skillset card. */
-.work .project-card-08 {
-  grid-column: 1 / span 5 !important;
-  grid-row: 2 !important;
-}
+/* Row 3 — TheSinners and Lamborghini. */
+.work .project-card-04 { grid-column: 1 !important; grid-row: 3 !important; }
+.work .project-card-05 { grid-column: 2 !important; grid-row: 3 !important; }
 
-.work .project-card-03 {
-  grid-column: 6 / span 7 !important;
-  grid-row: 2 !important;
-  align-self: center !important;
-}
+/* Row 4 — Piece 007 below TheSinners, left of Travis Scott. */
+.work .project-card-09 { grid-column: 1 !important; grid-row: 4 !important; }
+.work .project-card-06 { grid-column: 2 !important; grid-row: 4 !important; }
 
-/* Row 3 — TheSinners left, Lamborghini right. */
-.work .project-card-04 {
-  grid-column: 1 / span 5 !important;
-  grid-row: 3 !important;
-}
+/* Row 5 — Parallel and Untitled Artwork on one row. */
+.work .project-card-07 { grid-column: 1 !important; grid-row: 5 !important; }
+.work .project-card-10 { grid-column: 2 !important; grid-row: 5 !important; }
 
-.work .project-card-05 {
-  grid-column: 6 / span 7 !important;
-  grid-row: 3 !important;
-}
-
-/* Row 4 — Piece 007 below TheSinners and left of Travis Scott. */
-.work .project-card-09 {
-  grid-column: 1 / span 5 !important;
-  grid-row: 4 !important;
-}
-
-.work .project-card-06 {
-  grid-column: 6 / span 7 !important;
-  grid-row: 4 !important;
-}
-
-/* Row 5 — Parallel and the untitled character artwork side by side. */
-.work .project-card-07 {
-  grid-column: 1 / span 7 !important;
-  grid-row: 5 !important;
-}
-
-.work .project-card-10 {
-  grid-column: 8 / span 5 !important;
-  grid-row: 5 !important;
-}
-
-/* Keep the three artwork cards at their intended proportions. */
-.work .project-card-08 .project-stage {
-  aspect-ratio: 4 / 5 !important;
-}
-
+/* Preserve the three artwork card ratios. */
+.work .project-card-08 .project-stage { aspect-ratio: 4 / 5 !important; }
 .work .project-card-09 .project-stage,
-.work .project-card-10 .project-stage {
-  aspect-ratio: 1 / 1 !important;
-}
+.work .project-card-10 .project-stage { aspect-ratio: 1 / 1 !important; }
 
-/* Never crop the three artwork exports in their cards or on hover. */
+/* Display artwork in full; do not crop it to fill the frame. */
 .work .project-card-08 .project-video-thumb,
 .work .project-card-09 .project-video-thumb,
 .work .project-card-10 .project-video-thumb {
@@ -126,17 +88,25 @@
   background: #050505 !important;
 }
 
-/* Mobile: stack projects in the same requested visual order. */
+/* Smaller titles to match the reduced card widths. */
+.work .project-list .project-card .project-copy h3 {
+  font-size: clamp(25px, 6.2cqi, 44px) !important;
+  line-height: .9 !important;
+  max-width: 100% !important;
+}
+
+/* Mobile: single column, with the same intended visual sequence. */
 @media (max-width: 900px) {
   .work .project-list {
-    display: grid !important;
+    width: 100% !important;
+    max-width: 620px !important;
     grid-template-columns: minmax(0, 1fr) !important;
     column-gap: 0 !important;
-    row-gap: clamp(44px, 8vw, 72px) !important;
+    row-gap: clamp(42px, 8vw, 66px) !important;
   }
 
   .work .project-list .project-card {
-    grid-column: 1 / -1 !important;
+    grid-column: 1 !important;
     grid-row: auto !important;
   }
 
@@ -151,12 +121,11 @@
   .work .project-card-07 { order: 9 !important; }
   .work .project-card-10 { order: 10 !important; }
 
-  .work .project-card-08 .project-stage {
-    aspect-ratio: 4 / 5 !important;
-  }
-
+  .work .project-card-08 .project-stage { aspect-ratio: 4 / 5 !important; }
   .work .project-card-09 .project-stage,
-  .work .project-card-10 .project-stage {
-    aspect-ratio: 1 / 1 !important;
+  .work .project-card-10 .project-stage { aspect-ratio: 1 / 1 !important; }
+
+  .work .project-list .project-card .project-copy h3 {
+    font-size: clamp(28px, 8cqi, 46px) !important;
   }
 }
