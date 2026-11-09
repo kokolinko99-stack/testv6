@@ -1,34 +1,30 @@
 /*
- * THRTYSIX — Compact Selected Work layout
+ * THRTYSIX — corrected paired project layout
+ * Replace app/artwork-card-fix.css with this file.
  *
- * Replace app/artwork-card-fix.css with this stylesheet.
- * app/layout.tsx already imports it.
+ * Desktop / tablet:
+ *  Row 1: Proof Nutrition              | Michael Jordan
+ *  Row 2: Piece 009                    | THRTYSIX Skillset
+ *  Row 3: TheSinners                   | Lamborghini
+ *  Row 4: Piece 007                    | Travis Scott — Documentary
+ *  Row 5: Parallel                     | Untitled Character Artwork
  *
- * Desktop rows:
- *  01 Proof Nutrition              | 02 Michael Jordan
- *  08 Piece 009                    | 03 THRTYSIX Skillset
- *  04 TheSinners                   | 05 Lamborghini
- *  09 Piece 007                    | 06 Travis Scott Documentary
- *  07 Parallel                     | 10 Untitled Character Artwork
- *
- * Existing project data, descriptions, media, case-study behavior, and
- * visual styling remain intact; this file only arranges the project cards.
+ * Two columns remain active down to 640px. Narrow phones use one column.
  */
 
-/* Compact, centered two-column project grid. */
 .work .project-list {
   display: grid !important;
   width: min(100%, 1180px) !important;
   max-width: 1180px !important;
   margin-inline: auto !important;
   grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-  grid-auto-rows: auto;
-  column-gap: clamp(22px, 3vw, 42px) !important;
-  row-gap: clamp(52px, 6vw, 88px) !important;
+  grid-auto-rows: auto !important;
+  column-gap: clamp(20px, 2.6vw, 38px) !important;
+  row-gap: clamp(42px, 5vw, 72px) !important;
   align-items: start !important;
 }
 
-/* Flatten the original layout wrappers so the cards share one grid. */
+/* Flatten the original wrappers, leaving the project cards as grid items. */
 .work .project-list > .project-layout-row-top,
 .work .project-list > .project-layout-feature,
 .work .project-list > .project-layout-row-mixed,
@@ -38,7 +34,7 @@
   display: contents !important;
 }
 
-/* Remove legacy width and nth-child placement constraints. */
+/* Remove old widths and nth-child placements. */
 .work .project-list .project-card {
   grid-column: auto !important;
   grid-row: auto !important;
@@ -54,7 +50,7 @@
 .work .project-card-01 { grid-column: 1 !important; grid-row: 1 !important; }
 .work .project-card-02 { grid-column: 2 !important; grid-row: 1 !important; }
 
-/* Row 2 — Piece 009 fills the space beside the Skillset card. */
+/* Row 2 — Piece 009 left of THRTYSIX Skillset. */
 .work .project-card-08 { grid-column: 1 !important; grid-row: 2 !important; }
 .work .project-card-03 { grid-column: 2 !important; grid-row: 2 !important; }
 
@@ -62,20 +58,20 @@
 .work .project-card-04 { grid-column: 1 !important; grid-row: 3 !important; }
 .work .project-card-05 { grid-column: 2 !important; grid-row: 3 !important; }
 
-/* Row 4 — Piece 007 below TheSinners, left of Travis Scott. */
+/* Row 4 — Piece 007 below TheSinners and left of Travis Scott. */
 .work .project-card-09 { grid-column: 1 !important; grid-row: 4 !important; }
 .work .project-card-06 { grid-column: 2 !important; grid-row: 4 !important; }
 
-/* Row 5 — Parallel and Untitled Artwork on one row. */
+/* Row 5 — Parallel and Untitled Character Artwork. */
 .work .project-card-07 { grid-column: 1 !important; grid-row: 5 !important; }
 .work .project-card-10 { grid-column: 2 !important; grid-row: 5 !important; }
 
-/* Preserve the three artwork card ratios. */
+/* Keep original ratios of the three added artworks. */
 .work .project-card-08 .project-stage { aspect-ratio: 4 / 5 !important; }
 .work .project-card-09 .project-stage,
 .work .project-card-10 .project-stage { aspect-ratio: 1 / 1 !important; }
 
-/* Display artwork in full; do not crop it to fill the frame. */
+/* Show full artwork without cropping it. */
 .work .project-card-08 .project-video-thumb,
 .work .project-card-09 .project-video-thumb,
 .work .project-card-10 .project-video-thumb {
@@ -88,21 +84,22 @@
   background: #050505 !important;
 }
 
-/* Smaller titles to match the reduced card widths. */
+/* Scale project titles to the two-column card width. */
 .work .project-list .project-card .project-copy h3 {
-  font-size: clamp(25px, 6.2cqi, 44px) !important;
-  line-height: .9 !important;
+  width: 100% !important;
   max-width: 100% !important;
+  font-size: clamp(24px, 5.2cqi, 42px) !important;
+  line-height: .9 !important;
 }
 
-/* Mobile: single column, with the same intended visual sequence. */
-@media (max-width: 900px) {
+/* Narrow phones only: single column. Tablet and desktop stay paired. */
+@media (max-width: 640px) {
   .work .project-list {
     width: 100% !important;
     max-width: 620px !important;
     grid-template-columns: minmax(0, 1fr) !important;
     column-gap: 0 !important;
-    row-gap: clamp(42px, 8vw, 66px) !important;
+    row-gap: clamp(38px, 8vw, 58px) !important;
   }
 
   .work .project-list .project-card {
