@@ -636,6 +636,26 @@ export default function PortfolioExperience() {
 
   return (
     <div className={`site-shell ${siteEntered ? "is-entered" : "is-preparing"}`}>
+      <style>{`
+        /* Artwork cards keep their own aspect ratios after being repositioned. */
+        .work .project-list .project-card.project-card-08 .project-stage {
+          aspect-ratio: 4 / 5 !important;
+        }
+
+        .work .project-list .project-card.project-card-09 .project-stage,
+        .work .project-list .project-card.project-card-10 .project-stage {
+          aspect-ratio: 1 / 1 !important;
+        }
+
+        .work .project-list .project-card.project-card-08 .project-stage .project-video-thumb,
+        .work .project-list .project-card.project-card-09 .project-stage .project-video-thumb,
+        .work .project-list .project-card.project-card-10 .project-stage .project-video-thumb {
+          object-fit: contain !important;
+          object-position: center !important;
+          transform: none !important;
+          filter: none !important;
+        }
+      `}</style>
       <Analytics />
       {loaderVisible && (
         <div className={`site-loader ${loaderLeaving ? "is-leaving" : ""}`} aria-label="Loading website" role="status">
@@ -685,12 +705,16 @@ export default function PortfolioExperience() {
               ))}
             </div>
 
-            <div className="project-layout-feature">
+            <div className="project-layout-row project-layout-row-top">
+              <TiltProject project={projects[7]} onOpen={openProject} />
               <TiltProject project={projects[2]} onOpen={openProject} />
             </div>
 
             <div className="project-layout-row project-layout-row-mixed">
-              <TiltProject project={projects[3]} onOpen={openProject} />
+              <div className="project-layout-stack">
+                <TiltProject project={projects[3]} onOpen={openProject} />
+                <TiltProject project={projects[8]} onOpen={openProject} />
+              </div>
               <div className="project-layout-stack">
                 {projects.slice(4, 6).map((project) => (
                   <TiltProject key={project.id} project={project} onOpen={openProject} />
@@ -698,21 +722,12 @@ export default function PortfolioExperience() {
               </div>
             </div>
 
-            <div className="project-layout-closing">
-              <TiltProject project={projects[6]} onOpen={openProject} />
-            </div>
-
             <div
-              className="project-layout-row project-layout-row-new"
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))",
-                gap: "clamp(28px, 3vw, 52px)",
-              }}
+              className="project-layout-row project-layout-row-mixed"
+              style={{ gridTemplateColumns: "minmax(0, 4fr) minmax(0, 3fr)" }}
             >
-              {projects.slice(7, 10).map((project) => (
-                <TiltProject key={project.id} project={project} onOpen={openProject} />
-              ))}
+              <TiltProject project={projects[6]} onOpen={openProject} />
+              <TiltProject project={projects[9]} onOpen={openProject} />
             </div>
           </div>
         </section>
