@@ -1,52 +1,162 @@
 /*
- * THRTYSIX — Artwork card ratio fix
+ * THRTYSIX — Selected Work layout repositioning
  *
- * These selectors intentionally target the three new cards by their stable
- * project IDs. This overrides older nth-child-based layout rules in
- * globals.css, including the mobile 16:10 rule.
+ * Replace app/artwork-card-fix.css with this file.
+ * The existing app/layout.tsx already imports this stylesheet.
+ *
+ * Desktop / wide tablet composition:
+ *   Row 1: PROOF NUTRITION | MICHAEL JORDAN
+ *   Row 2: PIECE 009       | THRTYSIX SKILLSET
+ *   Row 3: THESINNERS      | LAMBORGHINI
+ *   Row 4: PIECE 007       | TRAVIS SCOTT
+ *   Row 5: PARALLEL        | UNTITLED CHARACTER ARTWORK
+ *
+ * The original JSX wrappers are flattened with display: contents so every
+ * project card can be placed into the editorial grid without changing the
+ * project's content, modal behavior, animations, or data.
  */
 
-/* Keep the three artwork cards in the same responsive grid, without
-   legacy nth-child rules making the first card span the entire row. */
-.work .project-list .project-layout-row-new > .project-card.project-card-08,
-.work .project-list .project-layout-row-new > .project-card.project-card-09,
-.work .project-list .project-layout-row-new > .project-card.project-card-10 {
+.work .project-list {
+  display: grid !important;
+  grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+  grid-auto-rows: auto;
+  column-gap: clamp(18px, 2.8vw, 44px) !important;
+  row-gap: clamp(58px, 7vw, 112px) !important;
+  align-items: start !important;
+}
+
+/* Flatten the existing layout wrappers but preserve their children. */
+.work .project-list > .project-layout-row-top,
+.work .project-list > .project-layout-feature,
+.work .project-list > .project-layout-row-mixed,
+.work .project-list > .project-layout-closing,
+.work .project-list > .project-layout-row-new,
+.work .project-list > .project-layout-row-mixed > .project-layout-stack {
+  display: contents !important;
+}
+
+/* Reset inherited width and placement rules before assigning the new grid. */
+.work .project-list .project-card {
   grid-column: auto !important;
+  grid-row: auto !important;
   width: 100% !important;
+  max-width: none !important;
+  min-width: 0 !important;
   margin: 0 !important;
   justify-self: stretch !important;
   align-self: start !important;
 }
 
-/* Native aspect ratios from the actual artwork files:
-   Piece 009 = 1638 × 2048 (4:5)
-   Piece 007 = 1414 × 1414 (1:1)
-   New character = 1080 × 1080 (1:1)
-*/
-.work .project-list .project-layout-row-new > .project-card.project-card-08 > .project-stage {
+/* Row 1 — original opening pair. */
+.work .project-card-01 {
+  grid-column: 1 / span 5 !important;
+  grid-row: 1 !important;
+}
+
+.work .project-card-02 {
+  grid-column: 6 / span 7 !important;
+  grid-row: 1 !important;
+}
+
+/* Row 2 — Piece 009 left of the Skillset card. */
+.work .project-card-08 {
+  grid-column: 1 / span 5 !important;
+  grid-row: 2 !important;
+}
+
+.work .project-card-03 {
+  grid-column: 6 / span 7 !important;
+  grid-row: 2 !important;
+  align-self: center !important;
+}
+
+/* Row 3 — TheSinners left, Lamborghini right. */
+.work .project-card-04 {
+  grid-column: 1 / span 5 !important;
+  grid-row: 3 !important;
+}
+
+.work .project-card-05 {
+  grid-column: 6 / span 7 !important;
+  grid-row: 3 !important;
+}
+
+/* Row 4 — Piece 007 below TheSinners and left of Travis Scott. */
+.work .project-card-09 {
+  grid-column: 1 / span 5 !important;
+  grid-row: 4 !important;
+}
+
+.work .project-card-06 {
+  grid-column: 6 / span 7 !important;
+  grid-row: 4 !important;
+}
+
+/* Row 5 — Parallel and the untitled character artwork side by side. */
+.work .project-card-07 {
+  grid-column: 1 / span 7 !important;
+  grid-row: 5 !important;
+}
+
+.work .project-card-10 {
+  grid-column: 8 / span 5 !important;
+  grid-row: 5 !important;
+}
+
+/* Keep the three artwork cards at their intended proportions. */
+.work .project-card-08 .project-stage {
   aspect-ratio: 4 / 5 !important;
 }
 
-.work .project-list .project-layout-row-new > .project-card.project-card-09 > .project-stage,
-.work .project-list .project-layout-row-new > .project-card.project-card-10 > .project-stage {
+.work .project-card-09 .project-stage,
+.work .project-card-10 .project-stage {
   aspect-ratio: 1 / 1 !important;
 }
 
-/* Show the complete artwork instead of cropping it to fill a card. */
-.work .project-list .project-layout-row-new > .project-card.project-card-08 .project-video-thumb,
-.work .project-list .project-layout-row-new > .project-card.project-card-09 .project-video-thumb,
-.work .project-list .project-layout-row-new > .project-card.project-card-10 .project-video-thumb {
+/* Never crop the three artwork exports in their cards or on hover. */
+.work .project-card-08 .project-video-thumb,
+.work .project-card-09 .project-video-thumb,
+.work .project-card-10 .project-video-thumb {
+  width: 100% !important;
+  height: 100% !important;
   object-fit: contain !important;
   object-position: center !important;
   transform: none !important;
   filter: none !important;
+  background: #050505 !important;
 }
 
-/* Preserve correct proportions on small screens too. */
+/* Mobile: stack projects in the same requested visual order. */
 @media (max-width: 900px) {
-  .work .project-list .project-layout-row-new > .project-card.project-card-08,
-  .work .project-list .project-layout-row-new > .project-card.project-card-09,
-  .work .project-list .project-layout-row-new > .project-card.project-card-10 {
-    grid-column: auto !important;
+  .work .project-list {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    column-gap: 0 !important;
+    row-gap: clamp(44px, 8vw, 72px) !important;
+  }
+
+  .work .project-list .project-card {
+    grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+  }
+
+  .work .project-card-01 { order: 1 !important; }
+  .work .project-card-02 { order: 2 !important; }
+  .work .project-card-08 { order: 3 !important; }
+  .work .project-card-03 { order: 4 !important; }
+  .work .project-card-04 { order: 5 !important; }
+  .work .project-card-05 { order: 6 !important; }
+  .work .project-card-09 { order: 7 !important; }
+  .work .project-card-06 { order: 8 !important; }
+  .work .project-card-07 { order: 9 !important; }
+  .work .project-card-10 { order: 10 !important; }
+
+  .work .project-card-08 .project-stage {
+    aspect-ratio: 4 / 5 !important;
+  }
+
+  .work .project-card-09 .project-stage,
+  .work .project-card-10 .project-stage {
+    aspect-ratio: 1 / 1 !important;
   }
 }
