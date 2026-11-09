@@ -711,15 +711,10 @@ export default function PortfolioExperience() {
             </div>
 
             <div className="project-layout-row project-layout-row-mixed">
-              <div className="project-layout-stack">
-                <TiltProject project={projects[3]} onOpen={openProject} />
-                <TiltProject project={projects[8]} onOpen={openProject} />
-              </div>
-              <div className="project-layout-stack">
-                {projects.slice(4, 6).map((project) => (
-                  <TiltProject key={project.id} project={project} onOpen={openProject} />
-                ))}
-              </div>
+              <TiltProject project={projects[3]} onOpen={openProject} />
+              <TiltProject project={projects[4]} onOpen={openProject} />
+              <TiltProject project={projects[8]} onOpen={openProject} />
+              <TiltProject project={projects[5]} onOpen={openProject} />
             </div>
 
             <div
