@@ -656,6 +656,20 @@ export default function PortfolioExperience() {
           filter: none !important;
         }
 
+        /* Adjust the visual hierarchy without changing the artwork positions. */
+        .work .project-list .project-layout-stack > .project-card.project-card-09 {
+          width: 82% !important;
+          max-width: 82%;
+          align-self: flex-start;
+          justify-self: start;
+        }
+
+        /* Give Parallel more room than the adjacent character artwork. */
+        .work .project-list .project-layout-row-mixed:last-child > .project-card.project-card-07 {
+          width: 100%;
+          min-width: 0;
+        }
+
         /* A little controlled irregularity keeps the project wall from feeling like a rigid grid. */
         .work .project-list .project-card-01 { translate: -9px 7px; rotate: -0.55deg; }
         .work .project-list .project-card-02 { translate: 9px -6px; rotate: 0.5deg; }
@@ -669,6 +683,10 @@ export default function PortfolioExperience() {
         .work .project-list .project-card-10 { translate: 12px -8px; rotate: 0.85deg; }
 
         @media (max-width: 760px) {
+          .work .project-list .project-layout-stack > .project-card.project-card-09 {
+            width: 100% !important;
+            max-width: 100%;
+          }
           .work .project-list .project-card-01 { translate: -4px 4px; rotate: -0.25deg; }
           .work .project-list .project-card-02 { translate: 4px -3px; rotate: 0.25deg; }
           .work .project-list .project-card-08 { translate: 4px 7px; rotate: -0.4deg; }
@@ -749,7 +767,7 @@ export default function PortfolioExperience() {
 
             <div
               className="project-layout-row project-layout-row-mixed"
-              style={{ gridTemplateColumns: "minmax(0, 4fr) minmax(0, 3fr)" }}
+              style={{ gridTemplateColumns: "minmax(0, 7fr) minmax(0, 3fr)" }}
             >
               <TiltProject project={projects[6]} onOpen={openProject} />
               <TiltProject project={projects[9]} onOpen={openProject} />
