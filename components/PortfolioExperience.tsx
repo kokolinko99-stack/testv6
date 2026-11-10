@@ -656,18 +656,29 @@ export default function PortfolioExperience() {
           filter: none !important;
         }
 
-        /* Adjust the visual hierarchy without changing the artwork positions. */
-        .work .project-list .project-layout-stack > .project-card.project-card-09 {
-          width: 82% !important;
-          max-width: 82%;
-          align-self: flex-start;
-          justify-self: start;
+        /*
+          Explicit portfolio sizing. These selectors are deliberately more
+          specific than the broad !important rules in work-layout.module.css,
+          which otherwise force every project card and row to equal sizing.
+        */
+        .work .project-list .project-layout-row-parallel {
+          grid-template-columns: minmax(0, 7fr) minmax(0, 3fr) !important;
+          align-items: start !important;
         }
 
-        /* Give Parallel more room than the adjacent character artwork. */
-        .work .project-list .project-layout-row-mixed:last-child > .project-card.project-card-07 {
-          width: 100%;
-          min-width: 0;
+        .work .project-list .project-layout-row-parallel > .project-card.project-card-07,
+        .work .project-list .project-layout-row-parallel > .project-card.project-card-10 {
+          width: 100% !important;
+          max-width: none !important;
+          min-width: 0 !important;
+        }
+
+        /* Piece 007 is intentionally much smaller than the Parallel feature card. */
+        .work .project-list .project-layout-row-mixed .project-layout-stack > .project-card.project-card-09 {
+          width: 68% !important;
+          max-width: 68% !important;
+          align-self: flex-start !important;
+          justify-self: start !important;
         }
 
         /* A little controlled irregularity keeps the project wall from feeling like a rigid grid. */
@@ -682,10 +693,20 @@ export default function PortfolioExperience() {
         .work .project-list .project-card-07 { translate: -10px 10px; rotate: -0.6deg; }
         .work .project-list .project-card-10 { translate: 12px -8px; rotate: 0.85deg; }
 
-        @media (max-width: 760px) {
-          .work .project-list .project-layout-stack > .project-card.project-card-09 {
+        @media (max-width: 900px) {
+          .work .project-list .project-layout-row-parallel {
+            grid-template-columns: minmax(0, 1fr) !important;
+          }
+          .work .project-list .project-layout-row-parallel > .project-card.project-card-07,
+          .work .project-list .project-layout-row-parallel > .project-card.project-card-10 {
             width: 100% !important;
-            max-width: 100%;
+            max-width: 100% !important;
+          }
+          .work .project-list .project-layout-row-mixed .project-layout-stack > .project-card.project-card-09 {
+            width: 82% !important;
+            max-width: 82% !important;
+            justify-self: center !important;
+            margin-inline: auto !important;
           }
           .work .project-list .project-card-01 { translate: -4px 4px; rotate: -0.25deg; }
           .work .project-list .project-card-02 { translate: 4px -3px; rotate: 0.25deg; }
@@ -765,10 +786,7 @@ export default function PortfolioExperience() {
               </div>
             </div>
 
-            <div
-              className="project-layout-row project-layout-row-mixed"
-              style={{ gridTemplateColumns: "minmax(0, 7fr) minmax(0, 3fr)" }}
-            >
+            <div className="project-layout-row project-layout-row-mixed project-layout-row-parallel">
               <TiltProject project={projects[6]} onOpen={openProject} />
               <TiltProject project={projects[9]} onOpen={openProject} />
             </div>
