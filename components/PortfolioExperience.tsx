@@ -657,9 +657,9 @@ export default function PortfolioExperience() {
         }
 
         /*
-          Explicit portfolio sizing. These selectors are deliberately more
-          specific than the broad !important rules in work-layout.module.css,
-          which otherwise force every project card and row to equal sizing.
+          Keep Parallel as the larger feature card in the final row.
+          The shared layout module marks its mixed-row sizing as !important,
+          so this more specific rule must also be !important.
         */
         .work .project-list .project-layout-row-parallel {
           grid-template-columns: minmax(0, 7fr) minmax(0, 3fr) !important;
@@ -671,14 +671,6 @@ export default function PortfolioExperience() {
           width: 100% !important;
           max-width: none !important;
           min-width: 0 !important;
-        }
-
-        /* Piece 007 is intentionally much smaller than the Parallel feature card. */
-        .work .project-list .project-layout-row-mixed .project-layout-stack > .project-card.project-card-09 {
-          width: 68% !important;
-          max-width: 68% !important;
-          align-self: flex-start !important;
-          justify-self: start !important;
         }
 
         /* A little controlled irregularity keeps the project wall from feeling like a rigid grid. */
@@ -697,17 +689,9 @@ export default function PortfolioExperience() {
           .work .project-list .project-layout-row-parallel {
             grid-template-columns: minmax(0, 1fr) !important;
           }
-          .work .project-list .project-layout-row-parallel > .project-card.project-card-07,
-          .work .project-list .project-layout-row-parallel > .project-card.project-card-10 {
-            width: 100% !important;
-            max-width: 100% !important;
-          }
-          .work .project-list .project-layout-row-mixed .project-layout-stack > .project-card.project-card-09 {
-            width: 82% !important;
-            max-width: 82% !important;
-            justify-self: center !important;
-            margin-inline: auto !important;
-          }
+        }
+
+        @media (max-width: 760px) {
           .work .project-list .project-card-01 { translate: -4px 4px; rotate: -0.25deg; }
           .work .project-list .project-card-02 { translate: 4px -3px; rotate: 0.25deg; }
           .work .project-list .project-card-08 { translate: 4px 7px; rotate: -0.4deg; }
@@ -786,7 +770,10 @@ export default function PortfolioExperience() {
               </div>
             </div>
 
-            <div className="project-layout-row project-layout-row-mixed project-layout-row-parallel">
+            <div
+              className="project-layout-row project-layout-row-mixed project-layout-row-parallel"
+              style={{ gridTemplateColumns: "minmax(0, 7fr) minmax(0, 3fr)" }}
+            >
               <TiltProject project={projects[6]} onOpen={openProject} />
               <TiltProject project={projects[9]} onOpen={openProject} />
             </div>
@@ -813,9 +800,11 @@ export default function PortfolioExperience() {
         <section className="contact" id="contact">
           <a
             className="contact-dm-button contact-heading-button"
-            href="mailto:info@bythrtysix.com"
-            aria-label="Let&apos;s work together — send an email to info@bythrtysix.com"
-            onClick={() => trackEvent("contact_email_click", { platform: "Email" })}
+            href="https://x.com/messages/compose"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Let&apos;s work together — send me a direct message on X"
+            onClick={() => trackEvent("contact_dm_click", { platform: "X" })}
           >
             <span>LET&apos;S WORK<br />TOGETHER</span>
             <strong aria-hidden="true">↗</strong>
